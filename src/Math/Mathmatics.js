@@ -220,7 +220,7 @@ function Mathmatics() {
 
   const getScore = async () => {
     const response = await axios
-      .get(`http://localhost:5000/api/game/${user._id}/Mathematics`)
+      .get(`https://brainrushb.onrender.com/game/${user._id}/Mathematics`)
       .catch((err) => console.log(err));
     const data = await response.data;
     if (data) {
@@ -236,7 +236,7 @@ function Mathmatics() {
   const saveData = async () => {
     let saveTime = document.getElementById("time1").innerHTML;
     const res = await axios
-      .post("http://localhost:5000/api/game", {
+      .post("https://brainrushb.onrender.com/game", {
         userId: user._id,
         username: user.username,
         gamename: "Mathematics",
@@ -252,7 +252,7 @@ function Mathmatics() {
   const patchData = async () => {
     console.log(bestScore);
     const res = await axios
-      .patch(`http://localhost:5000/api/oldgame/${currentScore._id}`, {
+      .patch(`https://brainrushb.onrender.com/oldgame/${currentScore._id}`, {
         score: bestScore,
         timer: bestTime,
       })

@@ -105,7 +105,7 @@ function Profile() {
     const fetchScores = async () => {
         const scoreRequests = [1, 2, 3].map(async (gameId) => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/game/${user._id}/MemoryMatch/${gameId}`);
+                const response = await axios.get(`https://brainrushb.onrender.com/api/game/${user._id}/MemoryMatch/${gameId}`);
                 return response.data;
             } catch (err) {
                 console.error(err);

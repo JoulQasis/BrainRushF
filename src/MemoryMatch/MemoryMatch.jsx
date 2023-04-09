@@ -322,7 +322,7 @@ function MemoryMatch() {
 
   const getScore = async () => {
     const response = await axios
-      .get(`http://localhost:5000/api/game/${user._id}/MemoryMatch/${levels}`)
+      .get(`https://brainrushb.onrender.com/api/game/${user._id}/MemoryMatch/${levels}`)
       .catch((err) => console.log(err));
     const data = await response.data;
     if (data) {
@@ -343,7 +343,7 @@ function MemoryMatch() {
   const saveData = async (levels) => {
     let saveTime = document.getElementById("time").innerHTML;
     const res = await axios
-      .post("http://localhost:5000/api/game", {
+      .post("https://brainrushb.onrender.com/api/game", {
         userId: user._id,
         username: user.username,
         gamename: "MemoryMatch",
@@ -359,7 +359,7 @@ function MemoryMatch() {
   const patchData = async (levels) => {
     bestRecord(levels);
     const res = await axios
-      .patch(`http://localhost:5000/api/memorymatch/${currentScore._id}`, {
+      .patch(`https://brainrushb.onrender.com/api/memorymatch/${currentScore._id}`, {
         level: levels,
         timer: newSavedTime,
       })

@@ -19,7 +19,7 @@ function SignUp() {
   };
 
   const sendRequest = async () => {
-    const res = await axios.post('http://localhost:5000/api/signup', {
+    const res = await axios.post('https://brainrushb.onrender.com/api/signup', {
       name: inputs.name,
       username: inputs.username,
       password: inputs.password

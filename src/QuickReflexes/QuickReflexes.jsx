@@ -141,7 +141,7 @@ function QuickReflexes() {
   const [prevScore, setPrevScore] = useState(1)
 
   const getScore = async () => {
-    const response = await axios.get(`http://localhost:5000/api/game/${user._id}/QuickReflexes`).catch(err => console.log(err));
+    const response = await axios.get(`https://brainrushb.onrender.com/api/game/${user._id}/QuickReflexes`).catch(err => console.log(err));
     const data = await response.data;
     if (data) { setIsScore(true); setCurrentScore(data) }
 
@@ -157,7 +157,7 @@ function QuickReflexes() {
 
   const saveData = async () => {
     let saveTime = document.getElementById("time1").innerHTML;
-    const res = await axios.post('http://localhost:5000/api/game', {
+    const res = await axios.post('https://brainrushb.onrender.com/api/game', {
       userId: user._id,
       username: user.username,
       gamename: "QuickReflexes",
@@ -172,7 +172,7 @@ function QuickReflexes() {
 
   const patchData = async () => {
     let saveTime = document.getElementById("time1").innerHTML;
-    const res = await axios.patch(`http://localhost:5000/api/oldgame/${currentScore._id}`, {
+    const res = await axios.patch(`https://brainrushb.onrender.com/api/oldgame/${currentScore._id}`, {
       score: score,
       timer: saveTime
     }).catch(err => console.log(err));
