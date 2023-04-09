@@ -58,7 +58,7 @@ function Mathmatics() {
 
   function generateProblem() {
 
-    
+
     setStop(false);
     let theProblem = document.getElementById("theProb");
 
@@ -94,8 +94,9 @@ function Mathmatics() {
         return num1 - num2;
       case "*":
         return num1 * num2;
+      default:
+        return "Error: Unsupported operator";
     }
-
   }
 
 
@@ -113,12 +114,8 @@ function Mathmatics() {
         document.getElementById("submit-btn").click();
       }
     });
-    let descriptionToScoreBordLeft = (document.getElementById(
-      "descriptionLeft"
-    ).innerHTML = " ");
-    let descriptionToScoreBordRight = (document.getElementById(
-      "descriptionRight"
-    ).innerHTML = " ");
+    document.getElementById("descriptionLeft").innerHTML = " ";
+    document.getElementById("descriptionRight").innerHTML = " ";
 
     const container = document.getElementById("btn-container");
 
@@ -234,8 +231,6 @@ function Mathmatics() {
 
   useEffect(() => {
     getScore();
-    let saveTime = document.getElementById("time1").innerHTML;
-    let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
   }, [prevScore]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveData = async () => {
@@ -255,7 +250,6 @@ function Mathmatics() {
   };
 
   const patchData = async () => {
-    let saveTime = document.getElementById("time1").innerHTML;
     console.log(bestScore);
     const res = await axios
       .patch(`http://localhost:5000/api/oldgame/${currentScore._id}`, {
@@ -342,18 +336,18 @@ function Mathmatics() {
           ></input>
         </div>
         <div id="btn-container" className={mathCss.startbtn}>
-        <button
-          className={mathCss.buttonDesign}
-          id="start-btn"
-          onClick={(e) => {
-            e.target.remove();
+          <button
+            className={mathCss.buttonDesign}
+            id="start-btn"
+            onClick={(e) => {
+              e.target.remove();
 
-            onStart();
-            generateProblem();
-          }}
-        >
-          Start
-        </button>
+              onStart();
+              generateProblem();
+            }}
+          >
+            Start
+          </button>
         </div>
         <button
           className={`${mathCss.submitbtn} ${mathCss.buttonDesign}`}
@@ -371,10 +365,10 @@ function Mathmatics() {
         <br></br> After pressing start the game will generate a random math
         equation for you,<br></br>try and solve correctly as many as you can in
         little time!<br></br>
-        
+
         For every correct answer your score will increase,
         <br></br> and with a higher score you level up to a harder version of
-        the game<br></br> 
+        the game<br></br>
       </p>
       <p id="descriptionRight" className={mathCss.descriptionRight}>
         {" "}

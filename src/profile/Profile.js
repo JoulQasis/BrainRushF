@@ -226,7 +226,7 @@ function Profile() {
             <Modal title="Choose Your Profile Picture" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 {imageSources.map((src) => (
                     <a onClick={() => { setProfilePic(src); setIsModalOpen(false) }}>
-                        <img src={src} id='pictures' />
+                        <img src={src} id='pictures' alt='ProfileP'/>
                     </a>
                 ))}
             </Modal>

@@ -15,16 +15,13 @@ function Content() {
   const navigate = useNavigate();
   const navigateToSignUp = () => {
     // navigate to /contacts
-    isLoggedIn ?navigate('/mathematics') :navigate("/LogIn")
+    isLoggedIn ? navigate('/mathematics') : navigate("/LogIn")
   };
 
   function start(className) {
     const hiddenElements = document.querySelectorAll(`.${className}`);
-    console.log(hiddenElements);
-  
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        console.log(entry);
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
         } else {
@@ -32,11 +29,11 @@ function Content() {
         }
       });
     });
-  
+
     hiddenElements.forEach((el) => observer.observe(el));
   }
-  
-  window.onload = function() {
+
+  window.onload = function () {
     start('hidden');
     start('hidden2');
   }
@@ -103,39 +100,39 @@ function Content() {
 
       <Container className={contentCss.botcontainerh1}>
         <h1 className={contentCss.Games}>Get familiar with our games!</h1>
-        <div class="hidden" >
+        <div className="hidden" >
 
-        <h1 className={contentCss.title}>Mathmatics</h1>
-        <div className={contentCss.something}>
-          <p className={contentCss.GameExplain}>How to Play:- <br></br><br></br> After pressing start the game will generate a random math equation
-            for you,<br></br>try and solve correctly as many as you can in little time!<br></br><br></br>
-            For every correct answer your score will increase,
-            <br></br> and with a higher score you level up to a harder version of the game</p>
-          <div
-            className={contentCss.Giffs}
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}>
-            {isHover ? (
-              <img
-                className={contentCss.Giffs}
-                src={require("./imges/Math.gif")}
-                alt="gifs"
-              />
-            ) : (
-              <img
-                className={contentCss.Giffs}
-                src={require("./imges/MathStatic.png")}
-                alt="gifs"
-              />
-            )
-            }
+          <h1 className={contentCss.title}>Mathmatics</h1>
+          <div className={contentCss.something}>
+            <p className={contentCss.GameExplain}>How to Play:- <br></br><br></br> After pressing start the game will generate a random math equation
+              for you,<br></br>try and solve correctly as many as you can in little time!<br></br><br></br>
+              For every correct answer your score will increase,
+              <br></br> and with a higher score you level up to a harder version of the game</p>
+            <div
+              className={contentCss.Giffs}
+              onMouseEnter={() => setIsHover(true)}
+              onMouseLeave={() => setIsHover(false)}>
+              {isHover ? (
+                <img
+                  className={contentCss.Giffs}
+                  src={require("./imges/Math.gif")}
+                  alt="gifs"
+                />
+              ) : (
+                <img
+                  className={contentCss.Giffs}
+                  src={require("./imges/MathStatic.png")}
+                  alt="gifs"
+                />
+              )
+              }
+            </div>
           </div>
         </div>
-        </div>
 
-        
 
-        <div class="hidden2" >
+
+        <div className="hidden2" >
           <h1 className={contentCss.title}>Memory Match</h1>
           <div className={contentCss.something} >
             <p className={contentCss.GameExplain2}>How to Play:- <br></br><br></br>
@@ -168,35 +165,35 @@ function Content() {
           </div>
         </div>
 
-        <div class="hidden" >
-        <h1 className={contentCss.title}>Quick Reflexes</h1>
-        <div className={contentCss.something}>
-          <p className={contentCss.GameExplain}>How to Play:- <br></br><br></br>
-            After pressing start the game will generate 80 boxes that one of them will lit up,<br></br>
-            and you have to notice it quickly and press on it,<br></br>
-            every box you get correctly your score will increase,and after you get certain amout of them correctly your level will go up
-            <br></br> and the game will be faster </p>
-          <div
-            className={contentCss.Giffs}
-            onMouseEnter={() => setIsHover3(true)}
-            onMouseLeave={() => setIsHover3(false)}
-          >
-            {isHover3 ? (
-              <img
-                className={contentCss.Giffs}
-                src={require("./imges/QuickReflexes.gif")}
-                alt="gifs"
-              />
-            ) : (
-              <img
-                className={contentCss.Giffs}
-                src={require("./imges/QuickReflexStatic.png")}
-                alt="gifs"
-              />
-            )
-            }
+        <div className="hidden" >
+          <h1 className={contentCss.title}>Quick Reflexes</h1>
+          <div className={contentCss.something}>
+            <p className={contentCss.GameExplain}>How to Play:- <br></br><br></br>
+              After pressing start the game will generate 80 boxes that one of them will lit up,<br></br>
+              and you have to notice it quickly and press on it,<br></br>
+              every box you get correctly your score will increase,and after you get certain amout of them correctly your level will go up
+              <br></br> and the game will be faster </p>
+            <div
+              className={contentCss.Giffs}
+              onMouseEnter={() => setIsHover3(true)}
+              onMouseLeave={() => setIsHover3(false)}
+            >
+              {isHover3 ? (
+                <img
+                  className={contentCss.Giffs}
+                  src={require("./imges/QuickReflexes.gif")}
+                  alt="gifs"
+                />
+              ) : (
+                <img
+                  className={contentCss.Giffs}
+                  src={require("./imges/QuickReflexStatic.png")}
+                  alt="gifs"
+                />
+              )
+              }
+            </div>
           </div>
-        </div>
         </div>
 
       </Container>

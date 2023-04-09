@@ -69,6 +69,8 @@ function MemoryMatch() {
     case 3:
       cardArray.push(...additionalCards.slice(0, 4));
       break;
+    default:
+      throw new Error(`Unsupported level: ${levels}`);
   }
   
   cardArray = [...cardArray, ...cardArray];
@@ -334,8 +336,8 @@ function MemoryMatch() {
 
   useEffect(() => {
     getScore();
-    let saveTime = document.getElementById("time").innerHTML;
-    let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
+    // let saveTime = document.getElementById("time").innerHTML;
+    // let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
   }, [prevScore]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveData = async (levels) => {

@@ -149,9 +149,9 @@ function QuickReflexes() {
 
   useEffect(() => {
     getScore();
-    let saveTime = document.getElementById("time1").innerHTML;
-    // /\\D/g is a regular expression that matches any non-digit character. 
-    let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
+    // let saveTime = document.getElementById("time1").innerHTML;
+    // // /\\D/g is a regular expression that matches any non-digit character. 
+    // let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
 
   }, [prevScore, score]); // eslint-disable-line react-hooks/exhaustive-deps
 
