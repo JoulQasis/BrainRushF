@@ -19,7 +19,7 @@ function Navb() {
   return (
     <Navbar collapseOnSelect expand="md" sticky="top" className={navCss.nav}>
       <Container className={navCss.containernav}>
-        <Navbar.Brand href="http://localhost:3000">
+        <Navbar.Brand href="/">
           <img className={navCss.icon} src={require("./imges/icon.png")} alt="icon"></img>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -51,7 +51,7 @@ function Navb() {
             )}
             {isLoggedIn && (
               <>
-                <Nav.Link className={navCss.navLink} href="/profile"> <Avatar  size={32} src={pPicture} icon={<UserOutlined />}/> </Nav.Link>
+                <Nav.Link className={navCss.navLink} href="/profile"> <Avatar size={32} src={pPicture} icon={<UserOutlined />} /> </Nav.Link>
                 <Nav.Link onClick={() => dispatch(authActions.logout())} className={navCss.navLink} href="/">
                   {" "}
                   Logout
