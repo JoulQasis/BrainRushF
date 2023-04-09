@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Courgette&family=Roboto&display=swap");
+
+* {
+  scroll-behavior: smooth;
+
+}
+
+nav {
+  font-family: "Open Sans";
+  background-size: 100% 100%;
+  background:
+    linear-gradient(#042281, transparent),
+    linear-gradient(to top left, #0732ce, transparent),
+    linear-gradient(to top right, #232323, transparent);
+}
+
+
+.containernav {
+  max-width: 100%;
+  padding: 0px;
+}
+
+.navLink {
+  font-size: 1.2rem;
+  font-family: "Roboto", sans-serif;
+  transition: all 0.2s ease-in-out;
+  color: #FFFFFF;
+}
+
+.navLink:hover {
+  transform: scale(1.2);
+  font-weight: bolder;
+}
+
+@media screen and (max-width: 768px) {
+  .navLink {
+    transition: all 0.2s ease-in-out;
+    margin-left: 1rem;
+  }
+
+  .navLink:hover {
+    transform: skewy(1deg);
+  }
+}
+
+.icon {
+  height: 3.2rem;
+  width: 3.2rem;
+  margin-left: 20px;
+  transform: scaleX(-1);
+}

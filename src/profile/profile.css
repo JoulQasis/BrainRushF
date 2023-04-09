@@ -1,0 +1,93 @@
+#main {
+    text-align: center;
+    padding-bottom: 2.5rem;
+    height: 100%;
+    background-color:rgb(5, 25, 100)  ;
+}
+
+.cell {
+    background-color: red;
+    padding: 1rem;
+    color: black;
+    height: 10em;
+    width: 10em;
+    border-radius: 100% ;
+}
+
+.section {
+    height: 25rem;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    background-size: 300% 300%;
+    background-image: linear-gradient(90deg,
+            rgba(5, 34, 139, 1) 0%,
+            rgba(2, 17, 69, 1) 25%,
+            rgba(35, 35, 35, 1) 51%,
+            black 100%);
+    animation: AnimateBG 6s ease infinite;
+}
+@keyframes AnimateBG {
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    0% {
+        background-position: 0% 50%;
+    }
+}
+
+.gamecells{
+    background-color:rgb(9, 41, 158)  ;
+    color: white;
+    height: 20rem;
+    width: 25rem;
+    display: grid;
+    border-radius: 4px;
+    box-shadow: 2px 3px rgb(9, 48, 189);
+    transition: all 0.4s ease-in-out
+}
+
+.gamecells:hover{
+    transform: translatey(-50%) scale(1.4);
+}
+
+#h2{
+   margin-top: 1.5rem;
+}
+
+.containergrid {
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    grid-gap: 2rem;
+    height: 100%;
+    margin-top: 2rem;
+
+}
+
+#button{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    width: 150px;
+    margin-left: 44px;
+    margin-top: 15px;
+}
+
+#pictures{
+    height: 118px;
+    width: 118px;
+    padding: 2px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.chart{
+    width:100%; 
+    max-width:600px;
+}

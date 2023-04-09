@@ -1,0 +1,124 @@
+.main 
+{
+  padding-top: 1rem;
+  min-height: 100vh; 
+  font-family: "Open Sans";
+  background: linear-gradient(#05228b, transparent),
+    linear-gradient(to top left, #021145, transparent),
+    linear-gradient(to top right, #232323, transparent);
+  background-blend-mode: screen;
+}
+
+.grid 
+{
+  text-align: left;
+  width: 900px;
+  margin: auto;
+  position: relative;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  letter-spacing: 0.1em;
+  object-fit: contain;
+  padding-bottom: 3rem;
+  padding-top: 1rem;
+
+}
+.p {
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  line-height: 2.8em;
+  max-width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+
+}
+
+.reloadB 
+{
+  float: left;
+  text-align: center;
+  padding-left: 3rem;
+}
+
+.score 
+{
+  text-align: center;
+  padding-bottom: 20px;
+
+}
+
+
+
+.buttonDesign{
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0,
+      #5adaff 0,
+      #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: black;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 20px;
+
+}
+
+.buttonDesign:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.buttonDesign:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px) scale(1.1);
+  font-weight: bold;
+}
+
+.buttonDesign:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+.timer {
+  padding-left: 3rem;
+  text-align: center;
+  font-size: 18px;
+
+}
+
+.stopper{
+  margin-left:10em;
+  border-radius: 10px;
+  width: 80px;
+}
+
+.level{
+  margin-right: 8em;
+}
+.score{
+  margin-left: 3em;
+  margin-top: 0.5em;
+}
+

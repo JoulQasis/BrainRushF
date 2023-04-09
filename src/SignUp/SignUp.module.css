@@ -1,0 +1,138 @@
+* {
+  box-sizing: border-box;
+}
+
+.main {
+  text-align: center;
+  padding-bottom: 2.5rem;
+  height: 91.7vh;
+  font-family: "Open Sans";
+  background-size: 300% 300%;
+  background-image: linear-gradient(
+    -90deg,
+    rgba(5, 34, 139, 1) 0%,
+    rgba(2, 17, 69, 1) 25%,
+    rgba(35, 35, 35, 1) 51%,
+    black 100%
+  );
+  animation: AnimateBG 5s ease infinite;
+}
+@keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container {
+  font-family: "JetBrains Mono", monospace;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 330px;
+  border: 10px solid;
+  border-radius: 35px;
+  padding: 60px 40px;
+}
+
+
+.input {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+.p {
+  margin-top: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.loginbutton2 {
+  margin: auto;
+  padding: 10px 26px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: lightblue;
+  border-radius: 10px;
+  display: flex;
+  border: 1px solid;
+  font-weight: 700;
+  box-shadow: 0px 0px 14px -7px #f09819;
+  background-image: linear-gradient(
+    45deg,
+    #05228b 0%,
+    #021145 35%,
+    #232323 100%
+  );
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.loginbutton2:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.loginbutton2:active {
+  transform: scale(0.95);
+}
+
+.loginbutton2:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(3px);
+}
+
+.loginbutton3 {
+  margin: auto;
+  padding: 10px 26px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: lightblue;
+  border-radius: 10px;
+  display: flex;
+  border: 1px solid;
+  font-weight: 700;
+  box-shadow: 0px 0px 14px -7px #f09819;
+  background-image: linear-gradient(
+    -45deg,
+    #05228b 0%,
+    #021145 35%,
+    #232323 100%
+  );
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.loginbutton3:hover {
+  transform: scale(1.2);
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.loginbutton3:active {
+  transform: scale(0.95);
+}
+
+.loginbutton3:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(3px);
+}

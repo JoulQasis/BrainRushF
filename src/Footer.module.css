@@ -1,0 +1,51 @@
+body {
+  font-family: "Open Sans";
+  font-size: larger;
+  color: #ffffff;
+}
+
+.icon {
+  height: 3rem;
+  width: 3rem;
+  margin-left: 70px;
+  padding: 5px;
+}
+
+@media screen and (max-width: 1400px) {
+  .icon {
+    margin-left: auto;
+  }
+}
+
+footer {
+  width: 100%;
+  height: 3.5rem;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: linear-gradient(50deg, #232323, transparent),
+    linear-gradient(150deg, #042281, transparent),
+    linear-gradient(250deg, #0732ce, transparent);
+  margin-bottom: 0 !important;
+}
+
+@media screen and (max-width: 1323px) {
+  footer {
+    position: relative;
+    overflow: auto;
+    height: auto;
+  }
+}
+
+.divC {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.divCspan{
+  width: 10%;
+}
