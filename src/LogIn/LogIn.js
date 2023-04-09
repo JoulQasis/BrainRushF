@@ -48,6 +48,7 @@ function LogIn() {
     // 👇️ navigate to /LogIn button
     history("/SignUp");
   };
+  
   return (
     <main className={LoginCss.main}>
       <div className={LoginCss.container}>
