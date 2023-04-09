@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../store";
 
 function LogIn() {
-  
+
   const dispatch = useDispatch();
   const history = useNavigate();
   const [inputs, setInputs] = useState({
@@ -24,7 +24,7 @@ function LogIn() {
 
   const sendRequest = async () => {
     try {
-      const res = await axios.post('https://brain-rush-f-rgo4-r15jna2dq-joulqasis.vercel.app//api/login', {
+      const res = await axios.post('http://localhost:5000/api/login', {
         username: inputs.username,
         password: inputs.password
       });

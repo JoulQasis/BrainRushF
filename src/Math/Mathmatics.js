@@ -220,7 +220,7 @@ function Mathmatics() {
 
   const getScore = async () => {
     const response = await axios
-      .get(`https://brain-rush-f-rgo4-r15jna2dq-joulqasis.vercel.app/api/game/${user._id}/Mathematics`)
+      .get(`http://localhost:5000/api/game/${user._id}/Mathematics`)
       .catch((err) => console.log(err));
     const data = await response.data;
     if (data) {
@@ -236,7 +236,7 @@ function Mathmatics() {
   const saveData = async () => {
     let saveTime = document.getElementById("time1").innerHTML;
     const res = await axios
-      .post("https://brain-rush-f-rgo4-r15jna2dq-joulqasis.vercel.app/api/game", {
+      .post("http://localhost:5000/api/game", {
         userId: user._id,
         username: user.username,
         gamename: "Mathematics",
@@ -252,7 +252,7 @@ function Mathmatics() {
   const patchData = async () => {
     console.log(bestScore);
     const res = await axios
-      .patch(`https://brain-rush-f-rgo4-r15jna2dq-joulqasis.vercel.app/api/oldgame/${currentScore._id}`, {
+      .patch(`http://localhost:5000/api/oldgame/${currentScore._id}`, {
         score: bestScore,
         timer: bestTime,
       })
