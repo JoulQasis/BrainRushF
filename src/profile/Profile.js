@@ -150,7 +150,6 @@ function Profile() {
             const level1Time = savedScores.savedScore1;
             const level2Time = savedScores.savedScore2;
             const level3Time = savedScores.savedScore3;
-
             const timeStr = '00 : 00 : 00';
             let level1TimeInSeconds, level2TimeInSeconds, level3TimeInSeconds;
             if (level1Time) {
