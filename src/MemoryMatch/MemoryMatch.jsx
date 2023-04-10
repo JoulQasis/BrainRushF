@@ -60,20 +60,24 @@ function MemoryMatch() {
     },
   ];
   
-  let cardArray = [...baseCards];
+  let cardArray = [];
   
   switch (levels) {
+    case 1:
+      cardArray = [...baseCards];
+      break;
     case 2:
-      cardArray.push(...additionalCards.slice(0, 2));
+      cardArray = [...baseCards, ...additionalCards.slice(0, 2)];
       break;
     case 3:
-      cardArray.push(...additionalCards.slice(0, 4));
+      cardArray = [...baseCards, ...additionalCards.slice(0, 4)];
       break;
     default:
       throw new Error(`Unsupported level: ${levels}`);
   }
   
   cardArray = [...cardArray, ...cardArray];
+  
 
   
   // var cardArray = [
