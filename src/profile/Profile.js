@@ -37,11 +37,17 @@ function Profile() {
     }
 
     const imageSources = [
-        require("./imges/12.jpg"),
-        require("./imges/13.jpg"),
-        require("./imges/12.jpg"),
-        require("./imges/13.jpg"),
+        require("./imges/1.jpg"),
+        require("./imges/2.jpg"),
+        require("./imges/3.jpg"),
+        require("./imges/4.jpg"),
+        require("./imges/5.jpg"),
+        require("./imges/6.jpg"),
+        require("./imges/7.jpg"),
+        require("./imges/8.jpg"),
+
     ];
+
 
     let mathematicsArray = JSON.parse(localStorage.getItem("mathematics")) || [];
     let lengthOfArray = [];
@@ -171,7 +177,7 @@ function Profile() {
             x: {
                 ticks: {
                     color: 'white' // add the color property
-                  },
+                },
             },
             y: {
                 beginAtZero: true, // start the Y axis at 0
@@ -213,12 +219,31 @@ function Profile() {
 
     const [chartData, setChartData] = useState(() => createChartData(level1TimeInSeconds));
 
+    function restartScores() {
+        localStorage.removeItem("mathematics");
+        localStorage.removeItem("quickreflexes");
+        window.location.reload();
+    }
+
+    const [buttons, setButtons] = useState( false);
+
+    useEffect(() => {
+        if (mathematicsArray.length > 0 || quickReflexesArray > 0) {
+            setButtons(true);
+        } else {
+            setButtons(false);
+        }
+    }, [mathematicsArray, quickReflexesArray]);
+
+
+
 
     return (
 
         <main id='main'>
             <div class='section'>
-                <Avatar size={240} icon={<UserOutlined />} src={profileImage} />
+                <p>Hello, {capitalizedUsername}</p>
+                <Avatar id='pp' size={240} icon={<UserOutlined />} src={profileImage} />
                 <Button id='button' type="primary" onClick={() => { showModal() }}>
                     Change Picture
                 </Button>
@@ -226,7 +251,7 @@ function Profile() {
             <Modal title="Choose Your Profile Picture" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 {imageSources.map((src) => (
                     <a onClick={() => { setProfilePic(src); setIsModalOpen(false) }}>
-                        <img src={src} id='pictures' alt='ProfileP'/>
+                        <img src={src} id='pictures' alt='ProfileP' />
                     </a>
                 ))}
             </Modal>
@@ -235,7 +260,7 @@ function Profile() {
             <div class='containergrid container'>
                 <div class='gamecells'>
                     <h2 id='h2'>Mathematics  </h2>
-                    <LineChart chartData={mathematics}  />
+                    <LineChart chartData={mathematics} />
                     <p> {mathAverage ? `You average is ${mathAverage.toFixed(2)} ` : null}</p>
 
                 </div>
@@ -245,13 +270,15 @@ function Profile() {
                 </div>
                 <div class='gamecells'>
                     <h2 id='h2'>Quick Reflexes</h2>
-                    <LineChart chartData={quickreflexes}  />
+                    <LineChart chartData={quickreflexes} />
                     <p> {quickReflexesAverage ? `You average is ${quickReflexesAverage.toFixed(2)} ` : null}</p>
                 </div>
             </div>
 
-            <div>
-                your score looks nice
+            <div class='containergrid container'>
+                <div class='restart'>   {buttons ? (
+                    <Button onClick={restartScores}>Restart your Mathematics and QuickReflexes Scores!</Button>
+                ) : null} </div>
             </div>
         </main>
     )

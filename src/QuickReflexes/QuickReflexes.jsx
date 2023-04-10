@@ -37,6 +37,20 @@ function QuickReflexes() {
         card.setAttribute("width", 70);
         card.setAttribute("height", 70);
         card.addEventListener("click", flipCard);
+
+        // Add CSS styles for scaling effect
+        card.style.transition = "transform 0.05s ease-in-out";
+        card.style.transformOrigin = "center";
+        card.style.cursor = "pointer";
+
+        // Add event listeners for scaling effect
+        card.addEventListener("mousedown", () => {
+          card.style.transform = "scale(0.9)";
+        });
+        card.addEventListener("mouseup", () => {
+          card.style.transform = "scale(1)";
+        });
+
         gridDisplay.appendChild(card);
       }
     }
