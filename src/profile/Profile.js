@@ -106,6 +106,9 @@ function Profile() {
 
 
     const user = useSelector((state) => state.user);
+    const username = user.username;
+    const capitalizedUsername = username.charAt(0).toUpperCase() + username.slice(1);
+
     const [savedScores, setSavedScores] = useState({});
 
     const fetchScores = async () => {
@@ -225,7 +228,7 @@ function Profile() {
         window.location.reload();
     }
 
-    const [buttons, setButtons] = useState( false);
+    const [buttons, setButtons] = useState(false);
 
     useEffect(() => {
         if (mathematicsArray.length > 0 || quickReflexesArray > 0) {
