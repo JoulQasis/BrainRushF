@@ -36,6 +36,7 @@ function MemoryMatch() {
 
     function difficulty() {
       console.log("object")
+      var levelDifficulty = document.getElementById("level");
 
       var gridDisplay = document.getElementById("grid");
       gridDisplay.innerHTML = "Choose Your Difficulty !"
@@ -46,6 +47,7 @@ function MemoryMatch() {
       easyButton.addEventListener("click", () => {
         // Handle the "Easy" button click event here
         gridDisplay.innerHTML = "";
+        levelDifficulty.innerHTML = "Level : Easy"
         cardArray = getCardArray(1);
         cardArray.sort(() => 0.5 - Math.random());
         createBoard(cardArray, [200, 225]);
@@ -58,6 +60,7 @@ function MemoryMatch() {
       mediumButton.addEventListener("click", () => {
         // Handle the "Medium" button click event here
         gridDisplay.innerHTML = "";
+        levelDifficulty.innerHTML = "Level : Medium"
         cardArray = getCardArray(2);
         cardArray.sort(() => 0.5 - Math.random());
         createBoard(cardArray, [225, 190]);
@@ -70,6 +73,7 @@ function MemoryMatch() {
       hardButton.addEventListener("click", () => {
         // Handle the "Hard" button click event here
         gridDisplay.innerHTML = "";
+        levelDifficulty.innerHTML = "Level : Hard"
         cardArray = getCardArray(3);
         cardArray.sort(() => 0.5 - Math.random());
         createBoard(cardArray, [180, 180]);
@@ -310,7 +314,7 @@ function MemoryMatch() {
 
       <p className={MemoryMatchCss.score} id="result">
         <span className={MemoryMatchCss.level} id="level">
-          Level : {levels}{" "}
+          Level :{" "}
         </span>{" "}
         <span id="time" className={MemoryMatchCss.score}>
           {`${("0" + Math.floor((time / 60000) % 60)).slice(-2)} : ${(
