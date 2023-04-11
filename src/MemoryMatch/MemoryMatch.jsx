@@ -213,9 +213,9 @@ function MemoryMatch() {
       setLevels(levels + 1);
       var gridDisplay = document.getElementById("grid");
       gridDisplay.innerHTML =
-        "<--- Next level &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; YOU GOT THEM ALL RIGHT!!  ";
+        "<--- Play Again! &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; YOU GOT THEM ALL RIGHT!!  ";
       var gameButton = document.getElementById("gameB");
-      gameButton.innerText = " Next Level?";
+      gameButton.innerText = "Play again?";
     }
   }
 
@@ -324,7 +324,6 @@ function MemoryMatch() {
           className={MemoryMatchCss.buttonDesign}
           onClick={() => {
             startGame();
-            setTimerOn(true);
           }}
           id="gameB"
         >
