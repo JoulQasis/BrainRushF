@@ -230,7 +230,7 @@ function Profile() {
     const [buttons, setButtons] = useState(false);
 
     useEffect(() => {
-        if (mathematicsArray.length > 0 || quickReflexesArray > 0) {
+        if (mathematicsArray.length > 0 || quickReflexesArray.length > 0) {
             setButtons(true);
         } else {
             setButtons(false);

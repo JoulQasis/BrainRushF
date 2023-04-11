@@ -53,6 +53,7 @@
 
 
 .buttonDesign{
+  margin: auto;
   align-items: center;
   appearance: none;
   background-image: radial-gradient(100% 100% at 100% 0,
