@@ -56,6 +56,7 @@ function QuickReflexes() {
     }
     createBoard();
   }
+  const [rounds, setRounds] = useState(-1)
 
   function startGame(Level) {
     var gameSpeed = 500;
@@ -82,6 +83,8 @@ function QuickReflexes() {
       }, gameSpeed);
       shuffled.pop()
     }
+    setRounds((rounds) => rounds + 1 )
+
   }
 
   // after choosing which box is correct saves the id,updates the level and goes to checkMatch()
@@ -176,6 +179,7 @@ function QuickReflexes() {
       username: user.username,
       gamename: "QuickReflexes",
       score: score,
+      rounds:rounds,
       timer: saveTime
     }).catch(err => console.log(err));
     const data = await res.data;
@@ -188,7 +192,8 @@ function QuickReflexes() {
     let saveTime = document.getElementById("time1").innerHTML;
     const res = await axios.patch(`https://brainrushb.onrender.com/api/oldgame/${currentScore._id}`, {
       score: score,
-      timer: saveTime
+      timer: saveTime,
+      rounds:rounds,
     }).catch(err => console.log(err));
     const data = await res.data;
     setPrevScore((prevScore) => prevScore + 1);
@@ -230,7 +235,7 @@ function QuickReflexes() {
 
   return (
     <main className={QuickReflexesCss.main}>
-      {isScore && <p className={QuickReflexesCss.p}>{`Beat your own record! Your best score was ${currentScore.score} questions in ${currentScore.timer} time!`}</p>}
+      {isScore && <p className={QuickReflexesCss.p}>{`Beat your own record! Your best score was ${currentScore.score} out of ${currentScore.rounds} in ${currentScore.timer} time!`}</p>}
       <div className={QuickReflexesCss.timer}>
         <span id="time1" >
           {`${("0" + Math.floor((time / 60000) % 60)).slice(-2)} : ${("0" + Math.floor((time / 1000) % 60)).slice(-2)} : ${("0" + ((time / 10) % 100)).slice(-2)}`}

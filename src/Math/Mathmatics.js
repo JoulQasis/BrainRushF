@@ -10,10 +10,10 @@ function Mathmatics() {
   const [time, setTime] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
   const [stop, setStop] = useState(false);
+  let level = 1;
 
   // Game variables
 
-  let level = 1;
 
   // Generate a random math problem
   // function generateProblem() {
@@ -122,7 +122,7 @@ function Mathmatics() {
     // Create a new button element
     const button = document.createElement("button");
     button.innerHTML = "Restart?";
-    button.className = ("Math_buttonDesign__nrzw0");
+    button.className = (mathCss.buttonDesign);
     button.addEventListener("click", () => {
       window.location.reload()
     });
@@ -169,7 +169,7 @@ function Mathmatics() {
   }
 
   const LEVELS = [
-    { level: 1, minScore: 0, maxScore: 5 },
+    { level: 1, minScore: -Infinity, maxScore: 5 },
     { level: 2, minScore: 6, maxScore: 10 },
     { level: 3, minScore: 11, maxScore: Infinity },
   ];

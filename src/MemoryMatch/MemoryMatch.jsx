@@ -14,158 +14,145 @@ function MemoryMatch() {
   const [prevScore, setPrevScore] = useState(1);
 
 
-  const baseCards = [
-    {
-      name: "cat",
-      img: require("./img/cat.png"),
-    },
-    {
-      name: "dog",
-      img: require("./img/dog.png"),
-    },
-    {
-      name: "frog",
-      img: require("./img/frog.png"),
-    },
-    {
-      name: "pizza",
-      img: require("./img/pizza.png"),
-    },
-    {
-      name: "hotdog",
-      img: require("./img/hotdog.png"),
-    },
-    {
-      name: "fries",
-      img: require("./img/fries.png"),
-    },
-  ];
-  
-  const additionalCards = [
-    {
-      name: "panda",
-      img: require("./img/panda.png"),
-    },
-    {
-      name: "bee",
-      img: require("./img/bee.png"),
-    },
-    {
-      name: "penguin",
-      img: require("./img/penguin.png"),
-    },
-    {
-      name: "elephant",
-      img: require("./img/elephant.png"),
-    },
-  ];
-  
-  let cardArray = [];
-  
-  switch (levels) {
-    case 1:
-      cardArray = [...baseCards];
-      break;
-    case 2:
-      cardArray = [...baseCards, ...additionalCards.slice(0, 2)];
-      break;
-    case 3:
-      cardArray = [...baseCards, ...additionalCards.slice(0, 4)];
-      break;
-    default:
-      throw new Error(`Unsupported level: ${levels}`);
-  }
-  
-  cardArray = [...cardArray, ...cardArray];
-  
-
-  
-  // var cardArray = [
-  //   {
-  //     name: "cat",
-  //     img: require("./img/cat.png"),
-  //   },
-  //   {
-  //     name: "dog",
-  //     img: require("./img/dog.png"),
-  //   },
-  //   {
-  //     name: "frog",
-  //     img: require("./img/frog.png"),
-  //   },
-  //   {
-  //     name: "pizza",
-  //     img: require("./img/pizza.png"),
-  //   },
-  //   {
-  //     name: "hotdog",
-  //     img: require("./img/hotdog.png"),
-  //   },
-  //   {
-  //     name: "fries",
-  //     img: require("./img/fries.png"),
-  //   },
-  // ];
-
-  // // creating the pictures array on levels.
-  // if (levels === 1) {
-  //   cardArray = [...cardArray];
-  // } else if (levels === 2) {
-  //   cardArray = [
-  //     ...cardArray,
-  //     {
-  //       name: "panda",
-  //       img: require("./img/panda.png"),
-  //     },
-  //     {
-  //       name: "bee",
-  //       img: require("./img/bee.png"),
-  //     },
-  //   ];
-  // } else {
-  //   cardArray = [
-  //     ...cardArray,
-  //     {
-  //       name: "panda",
-  //       img: require("./img/panda.png"),
-  //     },
-  //     {
-  //       name: "bee",
-  //       img: require("./img/bee.png"),
-  //     },
-  //     {
-  //       name: "penguin",
-  //       img: require("./img/penguin.png"),
-  //     },
-  //     {
-  //       name: "elephant",
-  //       img: require("./img/elephant.png"),
-  //     },
-  //   ];
-  // }
-  // cardArray = [...cardArray, ...cardArray];
-  // random sort the array elements
   let cardsChosen = [];
   let cardsChosenIds = [];
   var cardsWon = [];
+  let cardArray = [];
 
   // starting the game depending on your level
   function startGame() {
 
-    cardArray.sort(() => 0.5 - Math.random());
     document.getElementById("gameB")
       .innerText = "Start Game?";
     document.getElementById("level")
       .innerHTML = `Level: ${levels}`;
     var gridDisplay = document.getElementById("grid");
-
-    gridDisplay.innerHTML = " ";
     cardsWon = [];
-    document.getElementById("time")
-      .innerHTML = "00:00:00";
+    setTimerOn(false);
     setTime(0)
 
+    document.getElementById("time")
+      .innerHTML = "00:00:00";
+
+    function difficulty() {
+      console.log("object")
+
+      var gridDisplay = document.getElementById("grid");
+      gridDisplay.innerHTML = "Choose Your Difficulty !"
+      // Create the "Easy" button
+      const easyButton = document.createElement("button");
+      easyButton.innerHTML = "Easy";
+      easyButton.className = (MemoryMatchCss.buttonDesign);
+      easyButton.addEventListener("click", () => {
+        // Handle the "Easy" button click event here
+        gridDisplay.innerHTML = "";
+        cardArray = getCardArray(1);
+        cardArray.sort(() => 0.5 - Math.random());
+        createBoard(cardArray, [200, 225]);
+      });
+
+      // Create the "Medium" button
+      const mediumButton = document.createElement("button");
+      mediumButton.innerHTML = "Medium";
+      mediumButton.className = (MemoryMatchCss.buttonDesign);
+      mediumButton.addEventListener("click", () => {
+        // Handle the "Medium" button click event here
+        gridDisplay.innerHTML = "";
+        cardArray = getCardArray(2);
+        cardArray.sort(() => 0.5 - Math.random());
+        createBoard(cardArray, [225, 190]);
+      });
+
+      // Create the "Hard" button
+      const hardButton = document.createElement("button");
+      hardButton.innerHTML = "Hard";
+      hardButton.className = (MemoryMatchCss.buttonDesign);
+      hardButton.addEventListener("click", () => {
+        // Handle the "Hard" button click event here
+        gridDisplay.innerHTML = "";
+        cardArray = getCardArray(3);
+        cardArray.sort(() => 0.5 - Math.random());
+        createBoard(cardArray, [180, 180]);
+      });
+
+      // Add the buttons to the document body
+      gridDisplay.appendChild(easyButton);
+      gridDisplay.appendChild(mediumButton);
+      gridDisplay.appendChild(hardButton);
+    }
+    // Call the difficulty function to create the buttons
+    difficulty()
+
+    function getCardArray(level) {
+      const baseCards = [
+        {
+          name: "cat",
+          img: require("./img/cat.png"),
+        },
+        {
+          name: "dog",
+          img: require("./img/dog.png"),
+        },
+        {
+          name: "frog",
+          img: require("./img/frog.png"),
+        },
+        {
+          name: "pizza",
+          img: require("./img/pizza.png"),
+        },
+        {
+          name: "hotdog",
+          img: require("./img/hotdog.png"),
+        },
+        {
+          name: "fries",
+          img: require("./img/fries.png"),
+        },
+      ];
+
+      const additionalCards = [
+        {
+          name: "panda",
+          img: require("./img/panda.png"),
+        },
+        {
+          name: "bee",
+          img: require("./img/bee.png"),
+        },
+        {
+          name: "penguin",
+          img: require("./img/penguin.png"),
+        },
+        {
+          name: "elephant",
+          img: require("./img/elephant.png"),
+        },
+      ];
+
+      let cardArray = [];
+
+      switch (level) {
+        case 1:
+          cardArray = [...baseCards];
+          break;
+        case 2:
+          cardArray = [...baseCards, ...additionalCards.slice(0, 2)];
+          break;
+        case 3:
+          cardArray = [...baseCards, ...additionalCards.slice(0, 4)];
+          break;
+        default:
+          throw new Error(`Unsupported level: ${level}`);
+      }
+
+      return [...cardArray, ...cardArray];
+    }
+
+
     function createBoard(cardArray, imageSize) {
+      setTimerOn(true);
+      // Add the card images to the grid display
       cardArray.forEach((card, i) => {
         const img = new Image(...imageSize);
         img.src = require('./img/blank.jpg');
@@ -174,56 +161,9 @@ function MemoryMatch() {
         gridDisplay.appendChild(img);
       });
     }
-
-    switch (levels) {
-      case 1:
-        createBoard(cardArray, [200, 225]);
-        break;
-      case 2:
-        createBoard(cardArray, [225, 190]);
-        break;
-      default:
-        createBoard(cardArray, [180, 180]);
-    }
-
-
-
-    // if (levels === 1) {
-    //   function createBoard() {
-    //     cardArray.forEach((card, i) => {
-    //       const img = new Image(200, 225);
-    //       img.src = require('./img/blank.jpg');
-    //       img.dataset.id = i;
-    //       img.addEventListener('click', flipCard);
-    //       gridDisplay.appendChild(img);
-    //     });
-    //     console.log('hey')
-    //   }
-    //   createBoard();
-    // } else if (levels === 2) {
-    //   function createBoard2() {
-    //     cardArray.forEach((card, i) => {
-    //       const img = new Image(225, 190);
-    //       img.src = require('./img/blank.jpg');
-    //       img.dataset.id = i;
-    //       img.addEventListener('click', flipCard);
-    //       gridDisplay.appendChild(img);
-    //     });
-    //   }
-    //   createBoard2();
-    // } else {
-    //   function createBoard3() {
-    //     cardArray.forEach((card, i) => {
-    //       const img = new Image(180, 180);
-    //       img.src = require('./img/blank.jpg');
-    //       img.dataset.id = i;
-    //       img.addEventListener('click', flipCard);
-    //       gridDisplay.appendChild(img);
-    //     });
-    //   }
-    //   createBoard3();
-    // }
   }
+
+
   // function for flipping a card on a click button.
   function flipCard() {
     setTimerOn(true);
@@ -238,22 +178,6 @@ function MemoryMatch() {
   // checking if the cards are matching
   function checkMatch() {
     const cards = document.querySelectorAll("#grid img");
-    // if (cardsChosenIds[0] === cardsChosenIds[1]) {
-    //   cards[cardsChosenIds[0]].setAttribute("src", require("./img/blank.jpg"));
-    //   cards[cardsChosenIds[1]].setAttribute("src", require("./img/blank.jpg"));
-    // } else if (cardsChosen[0] === cardsChosen[1]) {
-    //   cards[cardsChosenIds[0]].setAttribute("src", require("./img/white.png"));
-    //   cards[cardsChosenIds[1]].setAttribute("src", require("./img/white.png"));
-    //   cards[cardsChosenIds[0]].removeEventListener("click", flipCard);
-    //   cards[cardsChosenIds[1]].removeEventListener("click", flipCard);
-    //   cardsWon.push(cardsChosen);
-    // } else {
-    //   cards[cardsChosenIds[0]].setAttribute("src", require("./img/blank.jpg"));
-    //   cards[cardsChosenIds[1]].setAttribute("src", require("./img/blank.jpg"));
-    // }
-    // cardsChosen = [];
-    // cardsChosenIds = [];
-
     const resetCards = (ids) => {
       ids.forEach(id => cards[id].setAttribute('src', require('./img/blank.jpg')));
     };
@@ -276,8 +200,6 @@ function MemoryMatch() {
 
     cardsChosen = [];
     cardsChosenIds = [];
-
-
     // if all the cards got matched level goes up and appear next level button
     if (cardsWon.length === cardArray.length / 2) {
       setTimerOn(false);
@@ -295,16 +217,7 @@ function MemoryMatch() {
       var gameButton = document.getElementById("gameB");
       gameButton.innerText = " Next Level?";
     }
-
-    // var levelScore = document.getElementById("level");
-    // levelScore.innerHTML = `Level : ${levels}`;
   }
-
-  // useEffect to update the level in the DOM
-  // useEffect(() => {
-  //   var levelScore = document.getElementById("level");
-  //   levelScore.innerHTML = `Level : ${levels}`;
-  // }, [levels]);
 
   // timer update on ever 100th of a second
   useEffect(() => {
