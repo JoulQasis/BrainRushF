@@ -196,13 +196,13 @@ function Profile() {
 
     function createChartData(level1TimeInSeconds, level2TimeInSeconds, level3TimeInSeconds) {
         const data = [
-            { level: 1, time: level1TimeInSeconds },
-            { level: 2, time: level2TimeInSeconds },
-            { level: 3, time: level3TimeInSeconds }
+            { level: "Easy", time: level1TimeInSeconds },
+            { level: "Medium", time: level2TimeInSeconds },
+            { level: "Hard", time: level3TimeInSeconds }
         ];
 
         const chartData = {
-            labels: data.map((d) => `Level ${d.level}`),
+            labels: data.map((d) => `${d.level}`),
             datasets: [
                 {
                     label: "Time taken",

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 function MemoryMatch() {
   const [time, setTime] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
-  const [levels, setLevels] = useState(1);
+  const [levels, setLevels] = useState("");
   const user = useSelector((state) => state.user);
   const [isScore, setIsScore] = useState(false);
   const [currentScore, setCurrentScore] = useState();
@@ -24,20 +24,16 @@ function MemoryMatch() {
 
     document.getElementById("gameB")
       .innerText = "Start Game?";
-    document.getElementById("level")
-      .innerHTML = `Level: ${levels}`;
+      document.getElementById("level")
+      .innerHTML = `Level: `;
     var gridDisplay = document.getElementById("grid");
     cardsWon = [];
     setTimerOn(false);
     setTime(0)
-
     document.getElementById("time")
       .innerHTML = "00:00:00";
 
     function difficulty() {
-      console.log("object")
-      var levelDifficulty = document.getElementById("level");
-
       var gridDisplay = document.getElementById("grid");
       gridDisplay.innerHTML = "Choose Your Difficulty !"
       // Create the "Easy" button
@@ -46,10 +42,12 @@ function MemoryMatch() {
       easyButton.className = (MemoryMatchCss.buttonDesign);
       easyButton.addEventListener("click", () => {
         // Handle the "Easy" button click event here
+        setLevels("easy");
         gridDisplay.innerHTML = "";
-        levelDifficulty.innerHTML = "Level : Easy"
         cardArray = getCardArray(1);
         cardArray.sort(() => 0.5 - Math.random());
+        document.getElementById("level")
+        .innerHTML = `Level: Easy`;
         createBoard(cardArray, [200, 225]);
       });
 
@@ -58,11 +56,13 @@ function MemoryMatch() {
       mediumButton.innerHTML = "Medium";
       mediumButton.className = (MemoryMatchCss.buttonDesign);
       mediumButton.addEventListener("click", () => {
+        setLevels("medium");
         // Handle the "Medium" button click event here
         gridDisplay.innerHTML = "";
-        levelDifficulty.innerHTML = "Level : Medium"
         cardArray = getCardArray(2);
         cardArray.sort(() => 0.5 - Math.random());
+        document.getElementById("level")
+        .innerHTML = `Level: Medium`;
         createBoard(cardArray, [225, 190]);
       });
 
@@ -71,11 +71,13 @@ function MemoryMatch() {
       hardButton.innerHTML = "Hard";
       hardButton.className = (MemoryMatchCss.buttonDesign);
       hardButton.addEventListener("click", () => {
+        setLevels("hard");
         // Handle the "Hard" button click event here
         gridDisplay.innerHTML = "";
-        levelDifficulty.innerHTML = "Level : Hard"
         cardArray = getCardArray(3);
         cardArray.sort(() => 0.5 - Math.random());
+        document.getElementById("level")
+        .innerHTML = `Level: Hard`;
         createBoard(cardArray, [180, 180]);
       });
 
@@ -83,9 +85,11 @@ function MemoryMatch() {
       gridDisplay.appendChild(easyButton);
       gridDisplay.appendChild(mediumButton);
       gridDisplay.appendChild(hardButton);
+
     }
     // Call the difficulty function to create the buttons
     difficulty()
+
 
     function getCardArray(level) {
       const baseCards = [
@@ -156,6 +160,7 @@ function MemoryMatch() {
 
     function createBoard(cardArray, imageSize) {
       setTimerOn(true);
+
       // Add the card images to the grid display
       cardArray.forEach((card, i) => {
         const img = new Image(...imageSize);
@@ -167,6 +172,10 @@ function MemoryMatch() {
     }
   }
 
+  useEffect(() => {    
+      getScore(levels)
+      console.log(levels)
+  }, [levels])
 
   // function for flipping a card on a click button.
   function flipCard() {
@@ -182,6 +191,7 @@ function MemoryMatch() {
   // checking if the cards are matching
   function checkMatch() {
     const cards = document.querySelectorAll("#grid img");
+
     const resetCards = (ids) => {
       ids.forEach(id => cards[id].setAttribute('src', require('./img/blank.jpg')));
     };
@@ -204,6 +214,8 @@ function MemoryMatch() {
 
     cardsChosen = [];
     cardsChosenIds = [];
+
+
     // if all the cards got matched level goes up and appear next level button
     if (cardsWon.length === cardArray.length / 2) {
       setTimerOn(false);
@@ -214,14 +226,15 @@ function MemoryMatch() {
         saveData(levels);
         console.log("save");
       }
-      setLevels(levels + 1);
       var gridDisplay = document.getElementById("grid");
       gridDisplay.innerHTML =
-        "<--- Play Again! &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; YOU GOT THEM ALL RIGHT!!  ";
+        "<--- Next level &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; YOU GOT THEM ALL RIGHT!!  ";
       var gameButton = document.getElementById("gameB");
-      gameButton.innerText = "Play again?";
+      gameButton.innerText = " Next Level?";
     }
+
   }
+
 
   // timer update on ever 100th of a second
   useEffect(() => {
@@ -257,8 +270,8 @@ function MemoryMatch() {
 
   useEffect(() => {
     getScore();
-    // let saveTime = document.getElementById("time").innerHTML;
-    // let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
+    let saveTime = document.getElementById("time").innerHTML;
+    let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
   }, [prevScore]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveData = async (levels) => {
@@ -279,6 +292,7 @@ function MemoryMatch() {
 
   const patchData = async (levels) => {
     bestRecord(levels);
+    let saveTime = document.getElementById("time").innerHTML;
     const res = await axios
       .patch(`https://brainrushb.onrender.com/api/memorymatch/${currentScore._id}`, {
         level: levels,
@@ -292,6 +306,7 @@ function MemoryMatch() {
 
 
   const bestRecord = (levels) => {
+    let array;
     let saveTime = document.getElementById("time").innerHTML;
     let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
     let bestSavedTime = parseInt(currentScore.timer.replace(/\D/g, ""));
@@ -309,12 +324,12 @@ function MemoryMatch() {
       {isScore && (
         <p
           className={MemoryMatchCss.p}
-        >{`Beat your own record! Your best time in level ${levels} was ${currentScore.timer} time!`}</p>
+        >{`Beat your own record! Your best time in ${currentScore.level} mode was ${currentScore.timer} time!`}</p>
       )}
 
       <p className={MemoryMatchCss.score} id="result">
         <span className={MemoryMatchCss.level} id="level">
-          Level :{" "}
+          Level : {" "}
         </span>{" "}
         <span id="time" className={MemoryMatchCss.score}>
           {`${("0" + Math.floor((time / 60000) % 60)).slice(-2)} : ${(

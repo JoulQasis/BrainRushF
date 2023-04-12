@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import mathCss from "./Math.module.css";
 axios.defaults.withCredentials = true;
@@ -10,51 +10,12 @@ function Mathmatics() {
   const [time, setTime] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
   const [stop, setStop] = useState(false);
+  const inputRef = useRef(null);
   let level = 1;
 
-  // Game variables
-
-
-  // Generate a random math problem
-  // function generateProblem() {
-  //   setStop(false);
-  //   let theProblem = document.getElementById("theProb");
-
-  //   if (level === 1) {
-  //     num1 = Math.floor(Math.random() * 10);
-  //     num2 = Math.floor(Math.random() * 10);
-  //   } else if (level === 2) {
-  //     num1 = Math.floor(Math.random() * 20);
-  //     num2 = Math.floor(Math.random() * 20);
-  //   } else {
-  //     num1 = Math.floor(Math.random() * 30);
-  //     num2 = Math.floor(Math.random() * 30);
-  //   }
-
-  //   let operators = ["+", "-", "*"];
-  //   const operator = operators[Math.floor(Math.random() * operators.length)];
-
-  //   if (operator === "-" && num2 > num1) {
-  //     toSwap = num2;
-  //     num2 = num1;
-  //     num1 = toSwap;
-  //   }
-
-  //   switch (operator) {
-  //     case "+":
-  //       setAnswer(num1 + num2);
-  //       break;
-  //     case "-":
-  //       setAnswer(num1 - num2);
-  //       break;
-  //     case "*":
-  //       setAnswer(num1 * num2);
-  //       break;
-  //   }
-
-  //   problem = `${num1} ${operator} ${num2} =`;
-  //   theProblem.innerHTML = `${problem}`;
-  // }
+  const autoFocus = () => {
+    inputRef.current.focus();
+  };
 
   function generateProblem() {
 
@@ -105,6 +66,7 @@ function Mathmatics() {
 
   // on start you will be able to press enter for the submit button.
   function onStart() {
+    autoFocus();
     setTimerOn(true);
     level = 1;
     let onClickSubmit = document.getElementById("theAnswer");
@@ -328,6 +290,7 @@ function Mathmatics() {
             x ? y =
           </p>
           <input
+            ref={inputRef}
             className={mathCss.inputG}
             type="text"
             placeholder="?"
@@ -341,7 +304,6 @@ function Mathmatics() {
             id="start-btn"
             onClick={(e) => {
               e.target.remove();
-
               onStart();
               generateProblem();
             }}
