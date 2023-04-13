@@ -5,10 +5,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 function QuickReflexes() {
-
+  const [rounds, setRounds] = useState(-1)
   const [time, setTime] = useState(0)
   const [timerOn, setTimerOn] = useState(false)
-  const [score, setScore] = useState()
+  const [score, setScore] = useState(0)
   let cardsChosenIds = [];
   let cardsWon = [];
   var cardsChosenIdsN;
@@ -23,7 +23,7 @@ function QuickReflexes() {
     results = document.getElementById("result");
     Level = 1;
     scores = []
-    results.innerHTML = `Level : ${Level} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Score : ${scores.length}`;
+    setScore(0)
     setTime(0);
 
     const gridDisplay = document.getElementById("grid");
@@ -55,8 +55,9 @@ function QuickReflexes() {
       }
     }
     createBoard();
+    setRounds(-1)
+
   }
-  const [rounds, setRounds] = useState(-1)
 
   function startGame(Level) {
     var gameSpeed = 500;
@@ -83,8 +84,7 @@ function QuickReflexes() {
       }, gameSpeed);
       shuffled.pop()
     }
-    setRounds((rounds) => rounds + 1 )
-
+    setRounds((rounds) => rounds + 1)
   }
 
   // after choosing which box is correct saves the id,updates the level and goes to checkMatch()
@@ -106,30 +106,27 @@ function QuickReflexes() {
 
   // to check if the box you clicked is correct
   function checkMatch() {
-    results = document.getElementById("result")
     if (cardsWon[0] === cardsChosenIdsToN) {
       scores.push(1);
-      setScore(scores.length)
-
+      setScore((score) => score + 1)
       cardsChosenIds.pop();
-      results.innerHTML = `Level : ${Level} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Score : ${scores.length}`;
       setTimeout(startGame(Level), 250);
     } else {
       scores.pop()
-      setScore(scores.length)
-
-      results.innerHTML = `Level : ${Level} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Score : ${scores.length}`;
+      setScore((score) => score - 1)
       cardsChosenIds.pop();
       setTimeout(startGame(Level), 250);
     }
   }
 
   function updateResult(score) {
-    console.log(score)
   }
   useEffect(() => {
     updateResult(score);
-  }, [score]);
+    results = document.getElementById("result");
+    results.innerHTML = `Level : ${Level} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Score : ${score}`;
+    console.log(score)
+  }, [score, rounds, setScore]);
 
   // timer update on ever 100th of a second
   useEffect(() => {
@@ -151,6 +148,9 @@ function QuickReflexes() {
   // back end!
   let bestScore;
   let bestTime;
+  let bestRounds;
+  var scoreAverage;
+  var percentage;
 
   const user = useSelector((state) => state.user);
   const [isScore, setIsScore] = useState(false);
@@ -166,21 +166,23 @@ function QuickReflexes() {
 
   useEffect(() => {
     getScore();
-    // let saveTime = document.getElementById("time1").innerHTML;
-    // // /\\D/g is a regular expression that matches any non-digit character. 
-    // let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
+    let saveTime = document.getElementById("time1").innerHTML;
+    // /\\D/g is a regular expression that matches any non-digit character. 
+    let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
 
   }, [prevScore, score]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveData = async () => {
+    console.log("save")
     let saveTime = document.getElementById("time1").innerHTML;
     const res = await axios.post('https://brainrushb.onrender.com/api/game', {
       userId: user._id,
       username: user.username,
       gamename: "QuickReflexes",
       score: score,
-      rounds:rounds,
-      timer: saveTime
+      rounds: rounds,
+      timer: saveTime,
+      percentage: percentage,
     }).catch(err => console.log(err));
     const data = await res.data;
     setPrevScore((prevScore) => prevScore + 1);
@@ -189,41 +191,55 @@ function QuickReflexes() {
 
 
   const patchData = async () => {
+    console.log("update")
+
     let saveTime = document.getElementById("time1").innerHTML;
     const res = await axios.patch(`https://brainrushb.onrender.com/api/oldgame/${currentScore._id}`, {
-      score: score,
-      timer: saveTime,
-      rounds:rounds,
+      score: bestScore,
+      timer: bestTime,
+      rounds: bestRounds,
+      percentage: percentage,
     }).catch(err => console.log(err));
     const data = await res.data;
     setPrevScore((prevScore) => prevScore + 1);
     return data;
 
   };
-
   const bestRecord = () => {
     let saveTime = document.getElementById("time1").innerHTML;
-    console.log(saveTime)
+    scoreAverage = score / rounds;
+    percentage = (scoreAverage * 100).toFixed(0);
+    let array = JSON.parse(localStorage.getItem("quickreflexes")) || [];
+    if (array.length >= 15) {
+      array.shift(); // remove the first element
+    }
+    console.log(percentage)
+    array.push(percentage);
+    localStorage.setItem("quickreflexes", JSON.stringify(array));
+
     if (currentScore) {
+      // if the previous score is better than new one keep the previous score.
       if (parseInt(currentScore.score, 10) > parseInt(score)) {
         bestScore = currentScore.score;
+        bestRounds = currentScore.rounds
+        percentage = currentScore.percentage
+
       } else {
         bestScore = score;
         bestTime = saveTime;
+        bestRounds = rounds
+        percentage = (scoreAverage * 100).toFixed(0) + '%';
+
       }
     } else {
       bestScore = score;
       bestTime = saveTime;
     }
-    let array = JSON.parse(localStorage.getItem("quickreflexes")) || [];
-    if (array.length >= 15) {
-      array.shift(); // remove the first element
-    }
-    array.push(score);
-    localStorage.setItem("quickreflexes", JSON.stringify(array));
+
   }
 
   function handleStopButton() {
+
     bestRecord()
     if (isScore) {
       patchData();
@@ -235,7 +251,7 @@ function QuickReflexes() {
 
   return (
     <main className={QuickReflexesCss.main}>
-      {isScore && <p className={QuickReflexesCss.p}>{`Beat your own record! Your best score was ${currentScore.score} out of ${currentScore.rounds} in ${currentScore.timer} time!`}</p>}
+      {isScore && <p className={QuickReflexesCss.p}>{`Beat your own record! Your best score was ${currentScore.percentage} ${currentScore.score} out of ${currentScore.rounds} in ${currentScore.timer} time!`}</p>}
       <div className={QuickReflexesCss.timer}>
         <span id="time1" >
           {`${("0" + Math.floor((time / 60000) % 60)).slice(-2)} : ${("0" + Math.floor((time / 1000) % 60)).slice(-2)} : ${("0" + ((time / 10) % 100)).slice(-2)}`}

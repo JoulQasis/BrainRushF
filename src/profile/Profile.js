@@ -13,7 +13,6 @@ function Profile() {
     let pPicture = localStorage.getItem('profilePicture')
     useEffect(() => {
     }, [pPicture])
-
     const [profileImage, setProfileImage] = useState(pPicture)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -77,6 +76,26 @@ function Profile() {
     });
 
 
+    const reflexesChartOptions = {
+        scales: {
+            x: {
+                ticks: {
+                    color: 'white' // add the color property
+                },
+            },
+            y: {
+                beginAtZero: true, // start the Y axis at 0
+                color: 'white', // add the color property
+                title: {
+                    display: true,
+                    text: 'Percentage %',
+
+                },
+            },
+
+        },
+    };
+
     let quickReflexesArray = JSON.parse(localStorage.getItem("quickreflexes")) || [];
     let lengthOfQuickReflexesArray = [];
     for (let i = 1; i < quickReflexesArray.length + 1; i++) {
@@ -102,6 +121,7 @@ function Profile() {
 
             },
         ],
+        
     });
 
 
@@ -272,7 +292,7 @@ function Profile() {
                 </div>
                 <div class='gamecells'>
                     <h2 id='h2'>Quick Reflexes</h2>
-                    <LineChart chartData={quickreflexes} />
+                    <Line data={quickreflexes} options={reflexesChartOptions} />
                     <p> {quickReflexesAverage ? `You average is ${quickReflexesAverage.toFixed(2)} ` : null}</p>
                 </div>
             </div>

@@ -101,8 +101,7 @@ function Mathmatics() {
     let reset = document.getElementById("theAnswer");
     // if the user presses submit button before starting the game it gives a warning
     if (chechUserAnswer.length === 0) {
-      Result.innerHTML = `PLEASE START THE GAME FIRST!`;
-      return;
+      return null;
     }
     if (userAnswer === answer) {
       setScore(score + 1);
