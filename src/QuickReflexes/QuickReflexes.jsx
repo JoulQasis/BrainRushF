@@ -208,13 +208,13 @@ function QuickReflexes() {
   const bestRecord = () => {
     let saveTime = document.getElementById("time1").innerHTML;
     scoreAverage = score / rounds;
-    percentage = (scoreAverage * 100).toFixed(0);
+    percentage = (scoreAverage * 100).toFixed(1);
     let array = JSON.parse(localStorage.getItem("quickreflexes")) || [];
     if (array.length >= 15) {
       array.shift(); // remove the first element
     }
     console.log(percentage)
-    array.push(percentage);
+    array.push(Number(percentage));
     localStorage.setItem("quickreflexes", JSON.stringify(array));
 
     if (currentScore) {
@@ -223,13 +223,11 @@ function QuickReflexes() {
         bestScore = currentScore.score;
         bestRounds = currentScore.rounds
         percentage = currentScore.percentage
-
       } else {
         bestScore = score;
         bestTime = saveTime;
         bestRounds = rounds
-        percentage = (scoreAverage * 100).toFixed(0) + '%';
-
+        percentage = (scoreAverage * 100).toFixed(1) + '%';
       }
     } else {
       bestScore = score;

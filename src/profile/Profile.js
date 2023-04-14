@@ -101,7 +101,7 @@ function Profile() {
     for (let i = 1; i < quickReflexesArray.length + 1; i++) {
         lengthOfQuickReflexesArray.push(i);
     }
-    const quickReflexesAverage = quickReflexesArray.reduce((a, b) => a + b, 0) / quickReflexesArray.length;
+    const quickReflexesAverage = quickReflexesArray.reduce((a, b) => parseInt(a) + parseInt(b), 0) / quickReflexesArray.length;
 
     const [quickreflexes, setQuickreflexes] = useState({
         labels: lengthOfQuickReflexesArray,
@@ -283,7 +283,7 @@ function Profile() {
                 <div class='gamecells'>
                     <h2 id='h2'>Mathematics  </h2>
                     <LineChart chartData={mathematics} />
-                    <p> {mathAverage ? `You average is ${mathAverage.toFixed(2)} ` : null}</p>
+                    <p> {mathAverage ? `You average is ${mathAverage.toFixed(1)} ` : null}</p>
 
                 </div>
                 <div class='gamecells'>
@@ -293,7 +293,7 @@ function Profile() {
                 <div class='gamecells'>
                     <h2 id='h2'>Quick Reflexes</h2>
                     <Line data={quickreflexes} options={reflexesChartOptions} />
-                    <p> {quickReflexesAverage ? `You average is ${quickReflexesAverage.toFixed(2)} ` : null}</p>
+                    <p> {quickReflexesAverage ? `You average is ${quickReflexesAverage.toFixed(1)} ` : null}</p>
                 </div>
             </div>
 
