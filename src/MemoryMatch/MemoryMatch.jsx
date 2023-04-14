@@ -7,13 +7,12 @@ import { useSelector } from "react-redux";
 function MemoryMatch() {
   const [time, setTime] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
-  const [levels, setLevels] = useState("");
   const user = useSelector((state) => state.user);
   const [isScore, setIsScore] = useState(false);
   const [currentScore, setCurrentScore] = useState();
   const [prevScore, setPrevScore] = useState(1);
 
-
+  var lvl;
   let cardsChosen = [];
   let cardsChosenIds = [];
   var cardsWon = [];
@@ -21,10 +20,9 @@ function MemoryMatch() {
 
   // starting the game depending on your level
   function startGame() {
-
     document.getElementById("gameB")
       .innerText = "Start Game?";
-      document.getElementById("level")
+    document.getElementById("level")
       .innerHTML = `Level: `;
     var gridDisplay = document.getElementById("grid");
     cardsWon = [];
@@ -42,12 +40,13 @@ function MemoryMatch() {
       easyButton.className = (MemoryMatchCss.buttonDesign);
       easyButton.addEventListener("click", () => {
         // Handle the "Easy" button click event here
-        setLevels("easy");
+        lvl = 'easy';
+        getScore('easy')
         gridDisplay.innerHTML = "";
         cardArray = getCardArray(1);
         cardArray.sort(() => 0.5 - Math.random());
         document.getElementById("level")
-        .innerHTML = `Level: Easy`;
+          .innerHTML = `Level: Easy`;
         createBoard(cardArray, [200, 225]);
       });
 
@@ -56,13 +55,15 @@ function MemoryMatch() {
       mediumButton.innerHTML = "Medium";
       mediumButton.className = (MemoryMatchCss.buttonDesign);
       mediumButton.addEventListener("click", () => {
-        setLevels("medium");
+        lvl = 'medium';
+        getScore('medium')
+
         // Handle the "Medium" button click event here
         gridDisplay.innerHTML = "";
         cardArray = getCardArray(2);
         cardArray.sort(() => 0.5 - Math.random());
         document.getElementById("level")
-        .innerHTML = `Level: Medium`;
+          .innerHTML = `Level: Medium`;
         createBoard(cardArray, [225, 190]);
       });
 
@@ -71,13 +72,15 @@ function MemoryMatch() {
       hardButton.innerHTML = "Hard";
       hardButton.className = (MemoryMatchCss.buttonDesign);
       hardButton.addEventListener("click", () => {
-        setLevels("hard");
+        lvl = 'hard';
+        getScore('hard')
+
         // Handle the "Hard" button click event here
         gridDisplay.innerHTML = "";
         cardArray = getCardArray(3);
         cardArray.sort(() => 0.5 - Math.random());
         document.getElementById("level")
-        .innerHTML = `Level: Hard`;
+          .innerHTML = `Level: Hard`;
         createBoard(cardArray, [180, 180]);
       });
 
@@ -85,11 +88,9 @@ function MemoryMatch() {
       gridDisplay.appendChild(easyButton);
       gridDisplay.appendChild(mediumButton);
       gridDisplay.appendChild(hardButton);
-
     }
     // Call the difficulty function to create the buttons
     difficulty()
-
 
     function getCardArray(level) {
       const baseCards = [
@@ -157,10 +158,18 @@ function MemoryMatch() {
       return [...cardArray, ...cardArray];
     }
 
-
     function createBoard(cardArray, imageSize) {
       setTimerOn(true);
-
+      // Check that cardArray is not empty
+      if (cardArray.length === 0) {
+        console.error('Card array is empty.');
+        return;
+      }
+      // Find the grid display element
+      if (!gridDisplay) {
+        console.error('Grid display element not found.');
+        return;
+      }
       // Add the card images to the grid display
       cardArray.forEach((card, i) => {
         const img = new Image(...imageSize);
@@ -170,69 +179,64 @@ function MemoryMatch() {
         gridDisplay.appendChild(img);
       });
     }
-  }
 
-  useEffect(() => {    
-      getScore(levels)
-      console.log(levels)
-  }, [levels])
-
-  // function for flipping a card on a click button.
-  function flipCard() {
-    setTimerOn(true);
-    const cardId = this.getAttribute("data-id");
-    cardsChosen.push(cardArray[cardId].name);
-    cardsChosenIds.push(cardId);
-    this.setAttribute("src", cardArray[cardId].img);
-    if (cardsChosen.length === 2) {
-      setTimeout(checkMatch, 250);
-    }
-  }
-  // checking if the cards are matching
-  function checkMatch() {
-    const cards = document.querySelectorAll("#grid img");
-
-    const resetCards = (ids) => {
-      ids.forEach(id => cards[id].setAttribute('src', require('./img/blank.jpg')));
-    };
-
-    const revealCards = (ids, image) => {
-      ids.forEach(id => {
-        cards[id].setAttribute('src', require(`./img/${image}.png`));
-        cards[id].removeEventListener('click', flipCard);
-      });
-    };
-
-    if (cardsChosenIds[0] === cardsChosenIds[1]) {
-      resetCards(cardsChosenIds);
-    } else if (cardsChosen[0] === cardsChosen[1]) {
-      revealCards(cardsChosenIds, 'white');
-      cardsWon.push(cardsChosen);
-    } else {
-      resetCards(cardsChosenIds);
-    }
-
-    cardsChosen = [];
-    cardsChosenIds = [];
-
-
-    // if all the cards got matched level goes up and appear next level button
-    if (cardsWon.length === cardArray.length / 2) {
-      setTimerOn(false);
-      if (isScore) {
-        console.log("patch");
-        patchData(levels);
-      } else {
-        saveData(levels);
-        console.log("save");
+    function flipCard() {
+      console.log(lvl)
+      setTimerOn(true);
+      const cardId = this.getAttribute("data-id");
+      cardsChosen.push(cardArray[cardId].name);
+      cardsChosenIds.push(cardId);
+      this.setAttribute("src", cardArray[cardId].img);
+      if (cardsChosen.length === 2) {
+        setTimeout(checkMatch, 250);
       }
-      var gridDisplay = document.getElementById("grid");
-      gridDisplay.innerHTML =
-        "<--- Next level &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; YOU GOT THEM ALL RIGHT!!  ";
-      var gameButton = document.getElementById("gameB");
-      gameButton.innerText = " Next Level?";
     }
 
+    // checking if the cards are matching
+    function checkMatch() {
+      const cards = document.querySelectorAll("#grid img");
+      const resetCards = (ids) => {
+        ids.forEach(id => cards[id].setAttribute('src', require('./img/blank.jpg')));
+      };
+      console.log(lvl)
+
+      const revealCards = (ids, image) => {
+        ids.forEach(id => {
+          cards[id].setAttribute('src', require(`./img/${image}.png`));
+          cards[id].removeEventListener('click', flipCard);
+        });
+      };
+
+      if (cardsChosenIds[0] === cardsChosenIds[1]) {
+        resetCards(cardsChosenIds);
+      } else if (cardsChosen[0] === cardsChosen[1]) {
+        revealCards(cardsChosenIds, 'white');
+        cardsWon.push(cardsChosen);
+      } else {
+        resetCards(cardsChosenIds);
+      }
+      cardsChosen = [];
+      cardsChosenIds = [];
+
+
+      // if all the cards got matched level goes up and appear next level button
+      if (cardsWon.length === cardArray.length / 2) {
+        setTimerOn(false);
+        var gridDisplay = document.getElementById("grid");
+        var gameButton = document.getElementById("gameB");
+        gridDisplay.innerHTML = `<--- Next level ${"&emsp;".repeat(7)} YOU GOT THEM ALL RIGHT!!`;
+        gameButton.innerText = " Next Level?";
+        if (isScore) {
+          console.log("patch");
+          patchData(lvl);
+        } else {
+          saveData(lvl);
+          console.log("save");
+        }
+      }
+      console.log(lvl)
+
+    }
   }
 
 
@@ -251,12 +255,19 @@ function MemoryMatch() {
   }, [timerOn]);
 
   // back end!
+  useEffect(() => {
+    getScore(lvl);
+
+
+    // let saveTime = document.getElementById("time").innerHTML;
+    // let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
+  }, [prevScore, lvl]);
 
   let newSavedTime;
 
-  const getScore = async () => {
+  const getScore = async (l) => {
     const response = await axios
-      .get(`https://brainrushb.onrender.com/api/game/${user._id}/MemoryMatch/${levels}`)
+      .get(`https://brainrushb.onrender.com/api/game/${user._id}/MemoryMatch/${l}`)
       .catch((err) => console.log(err));
     const data = await response.data;
     if (data) {
@@ -268,20 +279,16 @@ function MemoryMatch() {
     }
   };
 
-  useEffect(() => {
-    getScore();
-    let saveTime = document.getElementById("time").innerHTML;
-    let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
-  }, [prevScore]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const saveData = async (levels) => {
+
+  const saveData = async (lvl) => {
     let saveTime = document.getElementById("time").innerHTML;
     const res = await axios
       .post("https://brainrushb.onrender.com/api/game", {
         userId: user._id,
         username: user.username,
         gamename: "MemoryMatch",
-        level: levels,
+        level: lvl,
         timer: saveTime,
       })
       .catch((err) => console.log(err));
@@ -290,12 +297,12 @@ function MemoryMatch() {
     return data;
   };
 
-  const patchData = async (levels) => {
-    bestRecord(levels);
-    let saveTime = document.getElementById("time").innerHTML;
+  const patchData = async (lvl) => {
+    bestRecord(lvl);
+    // let saveTime = document.getElementById("time").innerHTML;
     const res = await axios
       .patch(`https://brainrushb.onrender.com/api/memorymatch/${currentScore._id}`, {
-        level: levels,
+        level: lvl,
         timer: newSavedTime,
       })
       .catch((err) => console.log(err));
@@ -304,9 +311,7 @@ function MemoryMatch() {
     return data;
   };
 
-
-  const bestRecord = (levels) => {
-    let array;
+  const bestRecord = (lvl) => {
     let saveTime = document.getElementById("time").innerHTML;
     let scoreInt = parseInt(saveTime.replace(/\D/g, ""));
     let bestSavedTime = parseInt(currentScore.timer.replace(/\D/g, ""));
