@@ -132,23 +132,23 @@ function Profile() {
     const [savedScores, setSavedScores] = useState({});
 
     const fetchScores = async () => {
-        const scoreRequests = ['easy', 'medium', 'hard'].map(async (gameId) => {
+        const scoreRequests = ["easy", "medium", "hard"].map(async (level) => {
             try {
-                const response = await axios.get(`https://brainrushb.onrender.com/api/game/${user._id}/MemoryMatch/${gameId}`);
-                return response.data;
+                const response = await axios.get(`https://brainrushb.onrender.com/api/game/${user._id}/MemoryMatch/${level}`);
+                const score = response.data && response.data.timer ? response.data.timer : '00:00:00'; // If response.data is empty, use '00:00:00' instead
+                console.log(score);
+                return score;
             } catch (err) {
                 console.error(err);
-                return null;
+                return '00:00:00';
             }
         });
         const scores = await Promise.all(scoreRequests);
         setSavedScores(
             scores.reduce(
                 (acc, scoreData, index) => {
-                    if (scoreData) {
-                        acc[`savedScore${index + 1}`] = scoreData.timer;
-
-                    }
+                    const score = scoreData ? scoreData : '00:00:00'; // use '00:00:00' if score data is null
+                    acc[`savedScore${index + 1}`] = score;
                     return acc;
                 },
                 {}

@@ -251,7 +251,7 @@ function QuickReflexes() {
 
   return (
     <main className={QuickReflexesCss.main}>
-      {isScore && <p className={QuickReflexesCss.p}>{`Beat your own record! Your best score was ${currentScore.percentage} ${currentScore.score} out of ${currentScore.rounds} in ${currentScore.timer} time!`}</p>}
+      {isScore && <p className={QuickReflexesCss.p}>{`Beat your own record! Your best score was ${currentScore.percentage}% ${currentScore.score} out of ${currentScore.rounds} in ${currentScore.timer} time!`}</p>}
       <div className={QuickReflexesCss.timer}>
         <span id="time1" >
           {`${("0" + Math.floor((time / 60000) % 60)).slice(-2)} : ${("0" + Math.floor((time / 1000) % 60)).slice(-2)} : ${("0" + ((time / 10) % 100)).slice(-2)}`}
